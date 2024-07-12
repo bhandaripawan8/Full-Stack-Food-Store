@@ -1,12 +1,19 @@
+<<<<<<< HEAD
 import React, { useState } from "react";
 import "./Navbar.css";
 import { assets } from "../../assets/frontend_assets/assets";
+=======
+import React from 'react'
+import './Navbar.css'
+import {assets} from '../../assets/frontend_assets/assets'
+>>>>>>> 97c74c4c0a72c52928fd9f3fe3745da1b43f2c3e
 
 const Navbar = () => {
   const [menu, setMenu] = useState('Home');
 
 
   return (
+<<<<<<< HEAD
     <div className="navbar">
       <img className="logo" src={assets.logo} />
       <ul className="navbar-menu">
@@ -24,6 +31,10 @@ const Navbar = () => {
         </div>
             <button>Sign in</button>
       </div>
+=======
+    <div className='navbar'>
+      <img src={assets.logo} alt="" />
+>>>>>>> 97c74c4c0a72c52928fd9f3fe3745da1b43f2c3e
     </div>
   );
 };
