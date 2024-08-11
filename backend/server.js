@@ -26,4 +26,3 @@ app.listen(port, ()=> {
 
 
 
-// mongodb+srv://pawanb78:xR4bhpl43NrQGlbC@cluster0.qejmt.mongodb.net/?
