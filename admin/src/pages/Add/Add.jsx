@@ -3,8 +3,7 @@ import './Add.css';
 import { assets } from '../../assets/admin_assets/assets';
 import axios from 'axios';
 
-const Add = () => {
-  const url = 'http://localhost:4000';
+const Add = ({url}) => {
   const [image, setImage] = useState(null);  
   const [data, setData] = useState({
     name: '',

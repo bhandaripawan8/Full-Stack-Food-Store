@@ -3,10 +3,7 @@ import './List.css'
 import axios from 'axios';
 import {toast} from 'react-toastify';
 
-const List = () => {
-
-
-  const url = 'http://localhost:4000'
+const List = ({url}) => {
   const [list, setList] = useState([]);
   const fetchList = async() =>{
     const response = await axios.get(`${url}/api/food/list`);
@@ -22,6 +19,7 @@ const List = () => {
       const response = await axios.post(`${url}/api/food/remove`, { id: foodId });
       if (response.data.success) {
         await fetchList();  
+        toast.success(response.data.message);
       } else {
         console.error('Failed to remove food item');
       }
@@ -29,7 +27,6 @@ const List = () => {
       console.error('Error removing food item:', error);
     }
   };
-  
 
   useEffect(()=>{
     fetchList();
