@@ -6,15 +6,33 @@ import validator from 'validator'
 import 'dotenv/config'
 
 // login user
-const loginUser = async(req, res) =>{
+const loginUser = async (req, res) => {
+    const { email, password } = req.body;
 
-}
+    try {
+        const user = await userModel.findOne({ email });
+        if (!user) {
+            return res.status(404).json({ success: false, message: "User not found, please register a new user" });
+        }
+        const isMatch = await bcrypt.compare(password, user.password);
+
+        if (!isMatch) {
+            return res.status(401).json({ success: false, message: 'Invalid credentials' });
+        }
+        const token = await createToken(user._id);
+        return res.status(200).json({ success: true, token });
+    } catch (error) {
+        console.error('Error during user login:', error);
+        return res.status(500).json({ success: false, message: 'Server error. Please try again later.' });
+    }
+};
+
 
 // create token
 const createToken = (id) =>{
     return jwt.sign({id},process.env.JWT_SECRET)
 }
-console.log(process.env.JWT_SECRET)
+
 
 // register user
 const registerUser = async (req, res) => {
