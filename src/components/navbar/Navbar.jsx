@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useNavigate from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import "./Navbar.css";
 import { assets } from "../../assets/frontend_assets/assets";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import { StoreContext } from "../../Context/StoreContext";
 const Navbar = ({ setShowLogin }) => {
   const [menu, setMenu] = useState("Home");
   const { getTotalCartAmount, token, setToken } = useContext(StoreContext);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const logout = () =>{
     localStorage.removeItem('token');
