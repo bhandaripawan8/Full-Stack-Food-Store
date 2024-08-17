@@ -21,9 +21,39 @@ const addToCart = async(req, res) =>{
 }
 
 // remove items from user Cart
-const removeFromCart = async (req, res) =>{
+// Optimized remove items from user Cart
+const removeFromCart = async (req, res) => {
+    try {
+        const { userId, itemId } = req.body;
 
-}
+        // Find the user and check if the item exists in the cart with a quantity greater than zero
+        const user = await userModel.findOne({ _id: userId, [`cartData.${itemId}`]: { $gt: 0 } });
+
+        if (!user) {
+            return res.json({ success: false, message: 'Item not found in cart or quantity is already zero' });
+        }
+
+        // Decrement the item's quantity by 1
+        const updatedUser = await userModel.findByIdAndUpdate(
+            userId,
+            { $inc: { [`cartData.${itemId}`]: -1 } },
+            { new: true } // Return the updated document
+        );
+
+        // If the quantity becomes 0, remove the item from the cart
+        if (updatedUser.cartData[itemId] === 0) {
+            await userModel.findByIdAndUpdate(
+                userId,
+                { $unset: { [`cartData.${itemId}`]: "" } } // Remove the item from the cart
+            );
+        }
+
+        res.json({ success: true, message: 'Removed from Cart' });
+    } catch (error) {
+        console.error(error);
+        res.json({ success: false, message: 'Error' });
+    }
+};
 
 // fetch user cart data
 const getCart = async (req, res) =>{
