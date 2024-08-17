@@ -21,7 +21,6 @@ const addToCart = async(req, res) =>{
 }
 
 // remove items from user Cart
-// Optimized remove items from user Cart
 const removeFromCart = async (req, res) => {
     try {
         const { userId, itemId } = req.body;
@@ -57,7 +56,14 @@ const removeFromCart = async (req, res) => {
 
 // fetch user cart data
 const getCart = async (req, res) =>{
-
+    try {
+        let userData = await userModel.findById(req.body.userId)
+        let cartData = await userData.cartData;
+        res.json({success: true, cartData})
+    } catch (error) {
+        console.log(error)
+        res.json({success: false, message: error.message})
+    }
 }
 
 export {addToCart, removeFromCart, getCart};
