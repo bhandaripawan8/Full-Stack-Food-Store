@@ -4,7 +4,7 @@
   "main": "server.js",
   "type": "module",
   "engines": {
-    "node": "node.*"
+    "node": "20.*"
   },
   "scripts": {
     "start": "node server.js"
